@@ -1,7 +1,7 @@
 # This Dockerfile is used to containerize your React frontend application so it can run consistently in any environment (e.g., local, CI/CD, Kubernetes).
 
 # Use a lightweight Node.js image
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
@@ -13,6 +13,10 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 5173
+FROM nginx:alpine
 
-CMD ["npm", "run", "dev", "--", "--host"]
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
