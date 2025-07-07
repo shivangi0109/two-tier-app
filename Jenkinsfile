@@ -21,6 +21,9 @@ pipeline {
       steps {
         dir('frontend/frontend') {
           sh 'npm install'
+          sh 'pwd'
+          sh 'ls -l'
+          sh 'ls -l frontend/frontend'
           sh 'npm run build'
           sh "docker build -t $DOCKERHUB_USER/frontend:$GIT_COMMIT -f Dockerfile ."
           sh "docker tag $DOCKERHUB_USER/frontend:$GIT_COMMIT $DOCKERHUB_USER/frontend:latest"
