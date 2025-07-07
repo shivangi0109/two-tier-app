@@ -22,7 +22,7 @@ pipeline {
         dir('frontend/frontend') {
           sh 'npm install'
           sh 'npm run build'
-          sh "docker build -t $DOCKERHUB_USER/frontend:$GIT_COMMIT ."
+          sh "docker build -t $DOCKERHUB_USER/frontend:$GIT_COMMIT -f Dockerfile ."
           sh "docker tag $DOCKERHUB_USER/frontend:$GIT_COMMIT $DOCKERHUB_USER/frontend:latest"
         }
       }
